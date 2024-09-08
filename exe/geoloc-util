@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+require 'bundler/setup'
+require 'geoloc/util'
+require 'optimist'
+require 'pry'
+require 'pry-nav'
+
+opts = Optimist::options do
+  banner <<-EOS
+Usage:
+  geoloc-util [options]
+
+Options:
+EOS
+  opt :locations, 'List of locations, city & state must be wrapped in quotes', type: :strings, default: []
+  opt :zip, 'List of zip codes', type: :strings, default: []
+  opt :help, 'View available commands'
+end
+
+if opts[:locations].empty? && opts[:zip].empty?
+  STDERR.puts 'Error: Please provide a location or zip code using the --locations or --zip flag.'
+  exit
+end
+
+if opts[:help]
+  puts Optimist::help
+  exit
+end
+
+valid_zips = opts[:zip].select { |zip| zip.match?(/^\d{5}$/) }
+invalid_zips = opts[:zip] - valid_zips
+
+invalid_zips.each do |zip|
+  STDERR.puts "Invalid zip code: #{zip}"
+end
+
+results = Geoloc::Util.get(locations: opts[:locations], zip: valid_zips)
+results.each { |result| puts result }
