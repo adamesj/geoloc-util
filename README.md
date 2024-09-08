@@ -1,6 +1,6 @@
 # Geoloc::Util
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/geoloc/util`. To experiment with that code, run `bin/console` for an interactive prompt.
+A Ruby CLI written with the optimist gem that uses the Open Weather Geocoding API (https://openweathermap.org/api/geocoding-api) to retrieve the Latitude and Longitude of a location in the US based on city/state or zip code.
 
 ## Installation
 
